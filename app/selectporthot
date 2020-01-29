@@ -1,0 +1,337 @@
+select 
+
+select bookID, count(*) compte from chapbookings where STR_TO_DATE('2019-12-21','%Y-%m-%d') >= todate group by bookID
+
+
+
+
+chapbookings
+	
+bookID
+custID
+roomID
+kidno
+adultno
+fromdate
+todate
+taxamount
+totalamount
+paid
+created_date
+updated_date
+
+ROOMID
+
+pour chaque ROOMID
+
+
+chaprooms
+
+roomID
+roomname
+room_typeID
+floorno
+peradultprice
+perkidprice
+color
+image
+created_at
+updated_at
+
+SELECT roomID, roomname, R.room_typeID, T.room_typeDE, floorno, peradultprice, perkidprice, image
+FROM  CHAPROOMS R, CHAPROOMTYPES T
+where R.room_typeID = T.room_typeID
+
+
+SELECT roomID, roomname, R.room_typeID, T.room_typeDE, floorno, peradultprice, perkidprice, image 
+FROM CHAPROOMS AS R JOIN CHAPROOMTYPES AS T
+using(room_typeID)
+
+
+SELECT A.`title` , B.`first_name` , B.`last_name`
+FROM `movies` AS A
+LEFT JOIN `members` AS B
+USING ( `movie_id` )
+chaproomtypes
+	
+room_typeID
+room_typeDE
+created_at
+updated_at
+
+
+Comment ecrire le query sans view
+
+SELECT O.OrderNumber, CONVERT(date,O.OrderDate) AS Date, 
+       P.ProductName, I.Quantity, I.UnitPrice 
+  FROM [Order] O 
+  JOIN OrderItem I ON O.Id = I.OrderId 
+  JOIN Product P ON P.Id = I.ProductId
+ORDER BY O.OrderNumber
+
+select B.custID, C.fname, C.lname, B.roomID, R.roomname, T.room_typeDE, B.kidno, B.adultno, b.fromdate,B.todate,B.taxamount,B.totalamount,B.paid
+
+from chapbookings as B
+Join CHAPCUSTOMERS as C on B.custID = C.custID
+JOIN CHAPROOMS as R on B.roomID = R.roomID
+JOIN CHAPROOMTYPES as T on R.room_typeID = T.room_typeID
+where STR_TO_DATE('2019-12-21','%Y-%m-%d') >= B.todate 
+
+
+Avec ce query je peux ramener le rommID qui sont libres
+On peut des lors fetcher les les chambres libres avec leur photos pour faire le booking
+
+
+
+A faire la form pour afficher les chambres non occupées
+
+
+On part a partir des chambres 
+
+select B.custID, C.fname, C.lname, B.roomID, R.roomname, T.room_typeDE, B.kidno, B.adultno, 
+       B.fromdate,B.todate,B.taxamount,B.totalamount,B.paid
+	   
+	   
+select R.roomID, R.roomname, R.status, T.room_typeDE, B.kidno,B.adultno, B.fromdate,B.todate, B.taxamount,B.totalamount,
+B.paid from CHAPROOMS as R RIGHT JOIN CHAPBOOKINGS as B on R.roomID = B.roomID 
+JOIN CHAPROOMTYPES as T on R.room_typeID = T.room_typeID JOIN CHAPCUSTOMERS as C on B.custID = C.custID 
+
+where STR_TO_DATE('2019-12-21','%Y-%m-%d') >= B.todate 
+order by R.roomID
+
+
+LAST VERSIE VAN DE QUERY 
+
+FROM CHAPROOMS
+THEN CHAPBOOKINGS
+THEN CHAPROOMTYPES
+WHERE date Checkin >= todate(checkout de toutes les chambres)
+and status = "Avalaible" or <>"I"
+order by roomname or roomID
+
+We only need to display (R.roomname, R.status,R.floorno, R.peradultprice, R.perkidprice, T.room_typeDE)
+
+others fields are not useless
+If we want to have a Historisch van de booking we'll need aother and more informations from table CHAPBOOKINGS
+
+
+select R.roomID, R.roomname, R.status,R.floorno, R.peradultprice, R.perkidprice, T.room_typeDE, B.fromdate,B.todate, B.taxamount,B.totalamount,
+B.paid from CHAPROOMS as R LEFT JOIN CHAPBOOKINGS as B on R.roomID = B.roomID 
+JOIN CHAPROOMTYPES as T on R.room_typeID = T.room_typeID
+
+where (STR_TO_DATE('2019-12-21','%Y-%m-%d') >= B.todate or B.todate is null)
+and R.status ='A'
+order by R.roomID;
+
+
+
+CREATE VIEW vchapfreerooms
+AS
+SELECT R.roomID, R.roomname, R.status,R.floorno, R.peradultprice, R.perkidprice, T.room_typeDE, 
+B.fromdate,B.todate, B.taxamount,B.totalamount, B.paid 
+FROM CHAPROOMS AS R LEFT JOIN CHAPBOOKINGS AS B ON R.roomID = B.roomID 
+JOIN CHAPROOMTYPES AS T ON R.room_typeID = T.room_typeID
+
+WHERE (STR_TO_DATE('2019-12-21','%Y-%m-%d') >= B.todate OR B.todate is null)
+AND R.status ='A'
+ORDER BY R.roomID;
+
+
+Drop view chapfreerooms;
+CREATE VIEW chapfreerooms
+AS
+SELECT distinct R.roomID, R.roomname, R.status,R.floorno, R.peradultprice, R.perkidprice, R.image, T.room_typeDE, 
+B.fromdate,B.todate, B.taxamount,B.totalamount, B.paid 
+FROM CHAPROOMS AS R LEFT JOIN CHAPBOOKINGS AS B ON R.roomID = B.roomID 
+JOIN CHAPROOMTYPES AS T ON R.room_typeID = T.room_typeID
+WHERE R.status ='A'
+ORDER BY R.roomID;
+
+
+CREATE VIEW V2
+AS
+SELECT R.roomID, R.roomname, R.status,R.floorno, R.peradultprice, R.perkidprice, T.room_typeDE 
+
+FROM CHAPROOMS AS R 
+JOIN CHAPROOMTYPES AS T ON R.room_typeID = T.room_typeID
+WHERE R.status ='A'
+and R.roomID NOT IN (select B.roomID from CHAPBOOKINGS B 
+WHERE (STR_TO_DATE('2017-12-21','%Y-%m-%d') >= B.todate OR B.todate is null));
+ORDER BY R.roomID;
+
+
+ select * from chapfreerooms
+ group by rooomID;
+ 
+ 
+
+create view as selectTo do Vrijdag
+
+1. page to display the rooms available according to the checkIn date van de user
+for each room, display the type of room (Description, color, peradultprice perkidprice
+
+Take a decision for the price of the room, simple to have a price foor the room, may be supplement for kinderen???
+2. Select a room   (enlarge the Photo on hoover or onclick)
+3. Book the  room   ===> Register  ==> if OK
+	/createbooking  ==> Insert in the table CHAPBOOKINGS  
+	==> Invoice generated and send by email with detail
+	==> Payment by internet with bankcard
+	redirect /welcome
+	redirect /
+	
+	
+drop view chapfreeroomes;	
+create view chapfreeroomes
+ as 
+ select roomID, roomname, peradultprice, image, status, max(todate) todate 
+ from chapfreerooms 
+ group by roomID;
+ 
+ 
+
+roomname
+varchar(50)
+NO
+NULL
+status
+
+room_typeDE
+varchar(50)
+NO
+NULL
+fromdate
+date
+YES
+NULL
+todate
+date
+YES
+NULL
+taxamount
+int(200)
+YES
+NULL
+totalamount
+int(200)
+YES
+NULL
+paid
+ 
+Displaying Raw Text With Curly Braces
+If you need to display a string that is wrapped in curly braces, you may escape the Blade behavior by prefixing your text with an @ symbol:
+
+@{{ This will not be processed by Blade }}
+Of course, all user supplied data should be escaped or purified. To escape the output, you may use the triple curly brace syntax:
+
+Hello, {{{ $name }}}.
+If you don't want the data to be escaped, you may use double curly-braces:
+
+Hello, {{ $name }}.
+Note: Be very careful when echoing content that is supplied by users of your application. Always use the triple curly brace syntax to escape any HTML entities in the content.
+
+If Statements
+@if (count($records) === 1)
+    I have one record!
+@elseif (count($records) > 1)
+    I have multiple records!
+@else
+    I don't have any records!
+@endif
+
+@unless (Auth::check())
+    You are not signed in.
+@endunless
+Loops
+@for ($i = 0; $i < 10; $i++)
+    The current value is {{ $i }}
+@endfor
+
+@foreach ($users as $user)
+    <p>This is user {{ $user->id }}</p>
+@endforeach
+
+@forelse($users as $user)
+    <li>{{ $user->name }}</li>
+@empty
+    <p>No users</p>
+@endforelse
+
+@while (true)
+    <p>I'm looping forever.</p>
+@endwhile
+Including Sub-Views
+@include('view.name')
+You may also pass an array of data to the included view:
+
+@include('view.name', array('some'=>'data'))
+Overwriting Sections
+To overwrite a section entirely, you may use the overwrite statement:
+
+@extends('list.item.container')
+
+@section('list.item.content')
+    <p>This is an item of type {{ $item->type }}</p>
+@overwrite
+Displaying Language Lines
+@lang('language.line')
+
+@choice('language.line', 1)
+Comments
+{{-- This comment will not be in the rendered HTML --}}
+
+Extending Blade
+Blade even allows you to define your own custom control structures. When a Blade file is compiled, each custom extension is called with the view contents, allowing you to do anything from simple str_replace manipulations to more complex regular expressions.
+
+The Blade compiler comes with the helper methods createMatcher and createPlainMatcher, which generate the expression you need to build your own custom directives.
+
+The createPlainMatcher method is used for directives with no arguments like @endif and @stop, while createMatcher is used for directives with arguments.
+
+The following example creates a @datetime($var) directive which simply calls ->format() on $var:
+
+Blade::extend(function($view, $compiler)
+{
+    $pattern = $compiler->createMatcher('datetime');
+
+    return preg_replace($pattern, '$1<?php echo $2->format(\'m/d/Y H:i\'); ?>', $view);
+});
+
+Options
+Field
+
+CHAPCUSTOMERS
+
+custID
+
+fname
+
+lname
+
+email
+
+gender
+
+birthdate
+
+contact
+
+address
+
+postalcode
+
+city
+
+country
+
+phone
+
+created_date
+
+updated_date
+
+
+	
+chapcustomers
+	fname	, lname, email, gender, birthdate, contact	,address, created_dat, updated_date	
+	
+	v
+		
