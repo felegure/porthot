@@ -12,11 +12,11 @@
 <!--            <div class="row card text-white bg-dark">  -->
               <div class="card-body">
              
-                <form action="{{ url('contact') }}" method="POST">
+                <form action="{{ url('contacthotel') }}" method="POST">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <input type="text" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}  text-info" name="name" id="name" placeholder="Your name" value="{{ old('name') }}">
-                        {!! $errors->first('name', '<div class="invalid-feedback">:message</div>') !!}
+                        {!! $errors->first('ContactName', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
                     <div class="form-group">
                         <input type="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }} text-info" name="email" id="email" placeholder="Enter your email" value="{{ old('email') }}">

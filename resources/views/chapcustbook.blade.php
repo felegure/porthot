@@ -1,7 +1,7 @@
 @extends('layouts')
- 
+
 @section('content')
- 
+
 <main class="py-4">
 <!-- chapcustbook.blade.php -->
   <div class="container">
@@ -12,6 +12,7 @@
             <div class="card-body">
                 Agree to terms and conditions Copy
              <form class="needs-validation" novalidate>
+                    {{csrf_field()}}
                <div class="form-row">
                  <div class="col-md-4 mb-3">
                    <label for="validationCustom01">First name</label>
@@ -19,7 +20,7 @@
                    <div class="valid-feedback">
                      Looks good!
                    </div>
-                 </div>                
+                 </div>
                  <div class="col-md-4 mb-3">
                    <label for="validationCustom02">Last name</label>
                    <input type="text" class="form-control" id="validationCustom02" value="Otto" required>
@@ -86,10 +87,10 @@
 
 <script type="text/javascript">
 
-    $('.date').datepicker({  
+    $('.date').datepicker({
 
        format: 'mm-dd-yyyy'
 
-     });  
+     });
 
-</script>  
+</script>

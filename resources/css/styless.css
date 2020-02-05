@@ -1,4 +1,4 @@
-
+ 
 h3{
         font-size: 15px;
 }
@@ -294,4 +294,15 @@ Removes white gap between slides - chagnge to base color of slide images
     min-width: 10vh;
     display:flex; 
     align-items:center;
+}
+
+.imgcenter {
+    display: bloc;
+}
+
+.wrapper {
+   width: 50%;
+}
+.wrapper img {
+    max-width: 280px;
 }

@@ -1,10 +1,10 @@
 @extends('layout')
- 
+
 @section('content')
 
 <main class="py-4">
 <div class="container">
- <div class="row6">   
+ <div class="row6">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <br><br>
@@ -17,24 +17,24 @@
 
                    <form method="GET" action="./freeroomes?fromdate=fromdate&todate=todate&adultno=adultno&kidno=kidno" name="chapcustcreate">
                  <!--    <input type="hidden" name="_token" value="j3yuhmIn7PKRS7f7m3BZOAJKLBixwoGEKheBrj5K"> -->
-                     
+                        {{csrf_field()}}
                         <br>
                         <div class="form-group row">
                             <label for="fromdate" class="col-md-4 col-form-label text-md-right">Check in</label>
                             <div class="col-md-6">
-                                <input id="fromdate" type="date" class="date form-control align-center text-center" name="fromdate" value="" required autocomplete="fromdate" 
+                                <input id="fromdate" type="date" class="date form-control align-center text-center" name="fromdate" value="" required autocomplete="fromdate"
                                 onchange="ControlFields(document.getElementById('fromdate').value, document.getElementById('todate').value)">
                             </div>
-                        </div>    
+                        </div>
                         <div class="form-group row">
                             <label for="todate" class="col-md-4 col-form-label text-md-right">Check out</label>
-                             
+
                             <div class="col-md-6">
                                 <input id="todate" type="date" class="date form-control align-center text-center" name="todate" value="" required autocomplete="todate"
                                 onchange="ControlFields(document.getElementById('fromdate').value, document.getElementById('todate').value)">
 
                             </div>
-                        </div>      
+                        </div>
                         <div class="form-group row">
                             <label for="adultno" class="col-md-4 col-form-label text-md-right">Adults</label>
 
@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
- </div>  
+ </div>
 <!--</header> -->
 </main>
 
@@ -85,9 +85,9 @@ function ControlFields(fromdate, todate){
     }
 }
 
- $('.date').datepicker({  
+ $('.date').datepicker({
    format: 'mm-dd-yyyy'
 
- });  
+ });
 
-</script>  
+</script>

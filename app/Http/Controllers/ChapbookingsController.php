@@ -14,8 +14,7 @@ class ChapbookingController extends Controller
      */
     public function index()
     {
- 
-		echo "ChapbookingController@index";
+    
 		     return view('booking.chapvalidate');
 
     }
@@ -29,9 +28,8 @@ class ChapbookingController extends Controller
 
     public function create()
     {
-        echo "ChapbookingController@create function";
-//        return view('booking.chapvalidate');
-        return view('booking.chapcreate');
+        dd("create");
+         return view('booking.chapcreate');
     }
 
     /**
@@ -41,12 +39,10 @@ class ChapbookingController extends Controller
      * @return \Illuminate\Http\Response
      */
   
-     public function store(Request $request)
+    public function store(Request $request)
     {
- 
-        echo "ChapbookingController@store.php";
 
-        $validatedData= $request->validate([
+          $validatedData= $request->validate([
            'roomID' => 'required|max:4',
            'custID' => 'required|max:10',
            'fromdate' => 'required|date',
@@ -68,11 +64,10 @@ class ChapbookingController extends Controller
         'totalamount' => $request->post('totalamount')
        ]);
   
-
        $chapbookings = ChapbookingController::create($validatedData);
   
 		return redirect('/chapbookings')->with('success', 'Customer Booked');
-     }
+    }
 
     /**
      * Display the specified resource.

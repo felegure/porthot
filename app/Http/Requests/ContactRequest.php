@@ -24,8 +24,8 @@ class ContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|between:5,30|alpha',
-            'mail' => 'bail|required|email',
+            'contactName' => 'bail|required|between:5,30|alpha',
+            'email' => 'bail|required|email',
             'subject' => 'bail|required|between:3,50|alpha',
             'message' => 'bail|required|max:250'
         ];

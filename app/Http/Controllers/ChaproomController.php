@@ -9,8 +9,9 @@ class ChaproomController extends Controller
 {
     public function index()
     { 
-
+    //  called by the route
         $chaproom = \App\Chaproom::all();
-        dd($chaproom);        return view('chaproom', compact('chaproom'));
+        dd($chaproom);
+        return view('chaproom', compact('chaproom'));
     }
 }

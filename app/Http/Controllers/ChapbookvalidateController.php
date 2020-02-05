@@ -7,96 +7,39 @@ use Illuminate\Http\Request;
 class ChapbookvalidateController extends Controller
 {
     public function index()
-    { 
-      return view('booking.chapvalidate', compact('chapvalidate'));
-      
-    }
-    
-    public function create()
     {
 
-        return view('booking.chapvalidate');
-    }
+//dd($para1);
+/*
+$checkin =  $_GET['fromdate'];
+$checkout =  $_GET['todate'];
+$kidno = $_GET['adultno'];
+$adultno = $_GET['kidno'];
+*/
+// dd($checkin);
+/*
+ $data[checkin]=$_GET['fromdate'];
+ $data[checkout]=$_GET['todate'];
+ $data[adultno]=$_GET['adultno'];
+ $data[kidno]=$_GET['kidno'];
 
-    /**
-     * Store a newly created resource in storage.µ
-     * 
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-  
-     public function store(Request $request)
-    {
+   dd($data);
+*/
 
-      $validatedData= $request->validate([
-           'roomID' => 'required|max:4',
-           'custID' => 'required|max:10',
-           'fromdate' => 'required|date',
-           'todate' => 'required|date',
-           'adultno' => 'required|max:2',
-           'kidno' => 'required|max:2',
-           'taxamount' => 'required|max:15',
-           'totalamount' => 'required|max:15'   // this field will be calculated Days x adultperprice  + Taxamount(****)
-        ]);
+ //     $checkin = "2017-12-31";
+ //    dd($checkin);
+ //   This variable will come from the form
 
-       $chapbookings = new Chapbookings([
-        'roomID' => $request->post('roomID'),
-        'custID' => $request->post('custID'),
-        'fromdate' => $request->post('fromdate'),
-        'todate' => $request->post('todate'),   
-        'adultno' => $request->post('adultno'),
-        'kidno' => $request->post('kidno'),
-        'taxamount' => $request->post('taxamount'),
-        'totalamount' => $request->post('totalamount')
-       ]);
-       $chapbookings->save();
+ // call to validate
 
-       return redirect()->route('booking.chapvalidate');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+ //     $chapbookvalidate = \App\Chapbookvalidate::whereDate ('todate', '<=', $checkin)
+//	                      ->orWhere('todate','=', Null) ->get();
+      return view('chapbookvalidate',  compact('chapbookvalidate'));
+    /*
+      ->with(compat('2020-01-02'))
+      ->with(compat('todate'))
+      ->with(compat('kidno'))
+      ->with(compat('ADULTNO'));
+       */
+	}
 }
-

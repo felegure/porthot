@@ -12,7 +12,7 @@
   $fromdate = new DateTime($fromdates);
   $todate = new DateTime($todates);
  $interval = $fromdate->diff($todate);
- dd($interval);
+// dd($interval);
  //if (int($interval)==0) {
  //  $interval = 1;
  //}
@@ -23,7 +23,7 @@
  $total = $peradultprice * $interval;
  dd($total);
  $totalamount=$total + ($total * $taxamount );
- dd($totalamount);
+// dd($totalamount);
 ?>
  <main class="py-1">
 <!-- chapbookcreate.blade.php -->

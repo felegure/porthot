@@ -5,7 +5,7 @@
             <div class="wpb_wrapper">
             <br><br><br><br>
                 <h2 class="lined-heading mt50 ">
-                    <span>What Other Visitors Experienced</span>
+                    <span>What other visitors experienced</span>
                 </h2>
                 <br>
             </div>
